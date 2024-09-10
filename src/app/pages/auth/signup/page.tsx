@@ -25,13 +25,13 @@ const SignupPage = () => {
         console.log('Admin registration successful', data);
 
         toast.success('Admin Registration Successful', {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       } else {
         // Handle signup error
         console.error('Admin registration failed', response.statusText);
         toast.error('Admin Registration Failed', {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       }
     }

@@ -96,7 +96,7 @@ const CreateMoviePage = () => {
         movie.duration === 0
       ) {
         toast.error("Please fill all the fields", {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
         return;
       }
@@ -108,7 +108,7 @@ const CreateMoviePage = () => {
         portraitImgUrl = await uploadImage(movie.portraitImg);
         if (!portraitImgUrl) {
           toast.error("Portrait Image upload failed", {
-            //position: toast.POSITION.TOP_CENTER,
+            position: 'top-center',
           });
           return;
         }
@@ -117,7 +117,7 @@ const CreateMoviePage = () => {
         landscapeImgUrl = await uploadImage(movie.landscapeImg);
         if (!landscapeImgUrl) {
           toast.error("Landscape Image upload failed", {
-            //position: toast.POSITION.TOP_CENTER,
+            position: 'top-center',
           });
           return;
         }
@@ -142,12 +142,12 @@ const CreateMoviePage = () => {
         console.log("Movie creation successful", data);
 
         toast.success("Movie Created Successfully", {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       } else {
         console.error("Movie creation failed", response.statusText);
         toast.error("Movie Creation Failed", {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       }
     }

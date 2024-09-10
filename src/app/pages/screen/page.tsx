@@ -980,7 +980,7 @@ const CreateScreenPage: React.FC = () => {
         screen.screenType === ''
       ) {
         toast.error('Please fill all the fields', {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
         return;
       }
@@ -999,12 +999,12 @@ const CreateScreenPage: React.FC = () => {
         console.log('Screen creation successful', data);
 
         toast.success('Screen Created Successfully', {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       } else {
         console.error('Screen creation failed', response.statusText);
         toast.error('Screen Creation Failed', {
-          //position: toast.POSITION.TOP_CENTER,
+          position: 'top-center',
         });
       }
     }
