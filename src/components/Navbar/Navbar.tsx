@@ -47,6 +47,9 @@ const Navbar = () => {
                         <Link href='/pages/movie/createmovie'>Add Movie</Link>
                         <Link href='/pages/screen'>Add Screen</Link>
                         <Link href='/pages/schedule'>Add Schedule</Link>
+                        <Link href='/pages/deletemovie'>Delete Movie</Link>
+                        <Link href='/pages/lockseats'>Lock Seats</Link>
+                        <Link href='/pages/canceltickets'>Cancel Tickets</Link>
                         {/*<Link href='/pages/movie/addceleb'>Add Celeb</Link>*/}
                     </>
                 ) : (

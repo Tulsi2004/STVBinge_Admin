@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -14,11 +14,7 @@ interface Movie {
   duration: number;
 }
 
-
-
-
 const CreateMoviePage = () => {
-
   const [movie, setMovie] = useState<Movie>({
     title: "",
     description: "",
@@ -48,12 +44,10 @@ const CreateMoviePage = () => {
         ...movie,
         genre: movie.genre.filter((selectedGenre) => selectedGenre !== genre),
       });
-    }
-    else {
+    } else {
       setMovie({ ...movie, genre: [...movie.genre, genre] });
-
     }
-  }
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -80,12 +74,27 @@ const CreateMoviePage = () => {
         console.error("Failed to upload the image.");
         return null;
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error:", error);
       return null;
     }
-  }
+  };
+
+  const checkForDuplicateMovie = async (title: string) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/movie/checkduplicate?title=${title}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    return data.exists; // return true if movie exists, false otherwise
+  };
+
   const handleCreateMovie = async () => {
     try {
       if (
@@ -96,7 +105,16 @@ const CreateMoviePage = () => {
         movie.duration === 0
       ) {
         toast.error("Please fill all the fields", {
-          position: 'top-center',
+          position: "top-center",
+        });
+        return;
+      }
+
+      // Check for movie duplication
+      const movieExists = await checkForDuplicateMovie(movie.title);
+      if (movieExists) {
+        toast.error("Movie with this title already exists", {
+          position: "top-center",
         });
         return;
       }
@@ -108,7 +126,7 @@ const CreateMoviePage = () => {
         portraitImgUrl = await uploadImage(movie.portraitImg);
         if (!portraitImgUrl) {
           toast.error("Portrait Image upload failed", {
-            position: 'top-center',
+            position: "top-center",
           });
           return;
         }
@@ -117,7 +135,7 @@ const CreateMoviePage = () => {
         landscapeImgUrl = await uploadImage(movie.landscapeImg);
         if (!landscapeImgUrl) {
           toast.error("Landscape Image upload failed", {
-            position: 'top-center',
+            position: "top-center",
           });
           return;
         }
@@ -142,19 +160,18 @@ const CreateMoviePage = () => {
         console.log("Movie creation successful", data);
 
         toast.success("Movie Created Successfully", {
-          position: 'top-center',
+          position: "top-center",
         });
       } else {
         console.error("Movie creation failed", response.statusText);
         toast.error("Movie Creation Failed", {
-          position: 'top-center',
+          position: "top-center",
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("An error occurred during movie creation", error);
     }
-  }
+  };
 
   return (
     <div className="formpage">
@@ -180,7 +197,7 @@ const CreateMoviePage = () => {
         accept="image/*"
         onChange={(event) => {
           if (event.target.files && event.target.files.length > 0) {
-            setMovie({ ...movie, portraitImg: event.target.files[0] })
+            setMovie({ ...movie, portraitImg: event.target.files[0] });
           }
         }}
       />
@@ -191,12 +208,11 @@ const CreateMoviePage = () => {
         accept="image/*"
         onChange={(event) => {
           if (event.target.files && event.target.files.length > 0) {
-            setMovie({ ...movie, landscapeImg: event.target.files[0] })
+            setMovie({ ...movie, landscapeImg: event.target.files[0] });
           }
         }}
       />
       <br />
-
       <label>Rating</label>
       <input
         type="number"
@@ -220,9 +236,7 @@ const CreateMoviePage = () => {
           </label>
         ))}
       </div>
-
       <br />
-
       <label>Duration</label>
       <input
         type="number"
@@ -232,11 +246,9 @@ const CreateMoviePage = () => {
         onChange={handleInputChange}
       />
       <br />
-
       <button onClick={handleCreateMovie}>Create Movie</button>
-
     </div>
-  )
-}
+  );
+};
 
-export default CreateMoviePage
+export default CreateMoviePage;
